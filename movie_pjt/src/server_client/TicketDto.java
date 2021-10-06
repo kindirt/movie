@@ -50,4 +50,4 @@ public class TicketDto {
 	public void setTicket_tot(int ticket_tot) {
 		this.ticket_tot = ticket_tot;
 	}
-
+}
