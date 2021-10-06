@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sun.swing.internal.plaf.metal.resources.metal;
+
 public class MovieDaoImpl implements MovieDao {
 	
 	private static MovieDaoImpl instance = new MovieDaoImpl();
@@ -43,4 +45,15 @@ public class MovieDaoImpl implements MovieDao {
 			
 		}
 	}
+	
+	public int cancel(int cu_id) throws ClassNotFoundException,SQLException{
+		String sql = "delete from customer where cu_id = ?";
+		
+		try(Connection conn = DbConn.getConn();
+				PreparedStatement pst = conn.prepareStatement(sql)){
+			pst.setInt(1, cu_id);
+			return pst.executeUpdate();
+		}
+	}
+	
 }

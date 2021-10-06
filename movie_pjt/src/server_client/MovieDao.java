@@ -7,4 +7,7 @@ public interface MovieDao {
 
 	public List<MovieDto> userFindByName(String user_id) throws ClassNotFoundException, SQLException;
 	
+	public int cancel(int cu_id) throws ClassNotFoundException, SQLException;
+	
+	
 }

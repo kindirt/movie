@@ -8,8 +8,11 @@ import java.io.OutputStreamWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Scanner;
 
 public class MultiServer_Sub {
 	private ServerSocket serverSocket;
@@ -113,6 +116,85 @@ public class MultiServer_Sub {
 				}
 				
 				//예매 
+				while(true) {
+					
+					Scanner scan = new Scanner(System.in);
+					TicketDao tdao = TicketDaoImpl.getInstance();
+					SeatDao sdao = SeatDaoImpl.getInstance();
+					MovieDao dao = MovieDaoImpl.getInstance();
+					Movie2Dao mdao = Movie2DaoImpl.getInstance();
+					PaymentDao pdao = PaymentDaoImpl.getInstance();
+					
+					System.out.println("=====메 뉴=====");
+					System.out.println("1.예매 2.조회 3.취소 4.나가기");
+					int num = scan.nextInt();
+					switch (num) {
+					case 1: {
+						System.out.println("====영화 예매====");
+						List<Movie2Dto> movieList = mdao.movieFindAll();
+					    for (Movie2Dto movie2Dto : movieList) {
+							System.out.println(movie2Dto);
+						}
+					    System.out.println("▶ 영화 번호를 입력해주세요.");
+					    int movieNum = scan.nextInt();
+					    
+					    System.out.println("▶ A ~ E 좌석을 입력해주세요.");
+					    String seatNum = scan.next();
+					    SeatDto seat = new SeatDto(0, seatNum);
+					    sdao.insertSeat(seat);
+					    
+					    System.out.println("▶ 결제");
+					    System.out.println("▶ 회원 번호를 입력해주세요.");
+					    int cusNum = scan.nextInt();					    
+					    PaymentDto payment = new PaymentDto(0,cusNum,10000,LocalDate.now());
+					    pdao.insert(payment);
+					    
+					    TicketDto ticket = new TicketDto(0,seat.getSeat_id(),payment.getPayment_id(),movieNum,1);					    
+						int cnt = tdao.insert(ticket);
+						if (cnt != 0) {
+							System.out.println("▶ 예매 성공");							
+							System.out.println("▶ 티켓번호 : "+ticket.getTicket_id());										    					    					   					    
+						}
+						break;
+					}
+					case 2: {
+						System.out.println("====예매 조회====");
+						System.out.println("▶ 티켓 번호를 입력해주세요.");
+						int ti_num = scan.nextInt();
+						
+						try {
+							TicketDto ticket = tdao.ticketFindById(ti_num);
+							System.out.println("====티켓 정보====");
+							System.out.println(ticket);
+							
+						} catch (ClassNotFoundException e) {
+							e.printStackTrace();
+						} catch (SQLException e) {
+							e.printStackTrace();
+						}
+						break;
+					}
+					case 3: {
+						System.out.println("====예매 취소===");
+						System.out.println("▶ 회원 번호를 입력해주세요.");
+						int cu_num = scan.nextInt();
+						
+								
+						try {
+							int rows = dao.cancel(cu_num);
+							System.out.println(rows+" 개, 예매가 취소되었습니다.");
+								
+						} catch (ClassNotFoundException e) {
+								e.printStackTrace();
+						} catch (SQLException e) {
+								e.printStackTrace();
+						}
+						break;			
+					}		
+				}	
+			}
+				
+				
 				
 //				for(User user : userList) {
 //					
