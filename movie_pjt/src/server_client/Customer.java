@@ -1,7 +1,7 @@
 package server_client;
 
 public class Customer {
-	
+	//수정사항 
 	private int cu_id;
 	private String user_id;
 	private String user_pw;
