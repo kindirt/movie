@@ -58,6 +58,7 @@ public class MultiServer_Sub {
 		}
 		@Override
 		public void run() {
+			//수정
 			//socket과 연결된 아이가 쓴 글을 읽을 수 있도록 기능을 구현한다.
 			System.out.println("--- 서버 스레드 실행 ---");
 			MovieDao dao = MovieDaoImpl.getInstance();
