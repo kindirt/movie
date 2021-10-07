@@ -201,7 +201,8 @@ public class MultiServer_Sub {
 				}
 				
 				//예매 
-				while(true) {
+			     boolean type = true;
+				 while(type) {
 					
 					Scanner scan = new Scanner(System.in);
 					TicketDao tdao = TicketDaoImpl.getInstance();
@@ -275,7 +276,12 @@ public class MultiServer_Sub {
 								e.printStackTrace();
 						}
 						break;			
-					}		
+					}
+					case 4:{
+						System.out.println("===나가기===");
+						type = false;
+						break;
+					}
 				}	
 			}
 				
