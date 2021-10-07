@@ -17,7 +17,7 @@ public class NameTest {
 				System.out.println(user);
 			}
 			
-			
+			System.out.println("");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
